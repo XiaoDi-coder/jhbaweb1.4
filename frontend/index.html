@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>首页 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- 导航栏将会由 nav.js 动态注入到这里 -->
+  <div id="site-nav-root"></div>
+  
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+
+  <main class="main-content">
+    <h1 class="page-title">
+      <i class="ph-duotone ph-sparkle" style="color: var(--color-accent); vertical-align: middle;"></i> 
+      欢迎使用内部资源共享平台
+    </h1>
+
+    <div class="carousel-wrap">
+      <div class="carousel" id="carousel">
+        <div class="carousel-item active">
+          <img src="images/banner1.jpg" alt="轮播图1" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&h=400&fit=crop'" />
+        </div>
+        <div class="carousel-item">
+          <img src="images/banner2.jpg" alt="轮播图2" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'" />
+        </div>
+        <div class="carousel-item">
+          <img src="images/banner3.jpg" alt="轮播图3" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80'" />
+        </div>
+      </div>
+      <button type="button" class="carousel-prev" id="carousel-prev" aria-label="上一张"><i class="ph ph-caret-left"></i></button>
+      <button type="button" class="carousel-next" id="carousel-next" aria-label="下一张"><i class="ph ph-caret-right"></i></button>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">平台简介</h2>
+      <p class="text-muted mb-0">
+        本平台为金华市保安服务有限公司内部使用，提供资源文件上传下载、话题讨论、公告通知等功能。请先登录后使用完整功能。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">快捷入口</h2>
+      <div class="flex gap-3">
+        <a href="files.html" class="btn btn-primary"><i class="ph-bold ph-folder-open"></i> 资源文件</a>
+        <a href="topics.html" class="btn btn-primary"><i class="ph-bold ph-chats-circle"></i> 话题讨论</a>
+        <a href="notice.html" class="btn btn-outline"><i class="ph-bold ph-bell-ringing"></i> 公告通知</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 引入轮播图动画控制逻辑 -->
+  <script src="js/carousel.js"></script>
+</body>
+</html>

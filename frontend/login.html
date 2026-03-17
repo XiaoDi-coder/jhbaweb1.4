@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* 登录页专属：垂直居中布局 */
+    .login-container { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 80px); padding: 20px; }
+    .login-wrap { width: 100%; max-width: 420px; margin: 0; }
+    .login-title { text-align: center; margin-bottom: 24px; justify-content: center; }
+    .login-title::before { display: none; } /* 移除通用卡片标题的前缀条 */
+    .login-form .btn { width: 100%; margin-top: 8px; padding: 12px; }
+    .login-msg { margin-bottom: 12px; padding: 10px; border-radius: var(--radius); font-size: 0.9rem; display: none; }
+    .login-msg.error { background: #fed7d7; color: var(--color-danger); border-left: 4px solid var(--color-danger); }
+    .login-msg.success { background: #c6f6d5; color: var(--color-success); border-left: 4px solid var(--color-success); }
+    .login-links { margin-top: 20px; text-align: center; }
+    .login-links a { color: var(--color-primary); margin: 0 8px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+    .login-links a:hover { color: var(--color-accent); }
+    .login-logo { text-align: center; margin-bottom: 16px; color: var(--color-accent); font-size: 3rem; }
+  </style>
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+
+  <main class="main-content login-container">
+    <div class="login-wrap">
+      <div class="card login-card">
+        <div class="login-logo"><i class="ph-duotone ph-shield-check"></i></div>
+        <h1 class="card-title login-title">用户登录</h1>
+        <p class="text-muted" style="text-align: center; margin: -12px 0 20px; font-size: 0.9rem;">内部人员专属工作平台</p>
+        <div class="login-msg" id="login-msg"></div>
+        <form class="login-form" id="login-form">
+          <div class="form-group">
+            <label for="account">邮箱或手机号</label>
+            <div style="position: relative;">
+              <input type="text" id="account" class="form-control" placeholder="请输入邮箱或手机号" required autocomplete="username" style="padding-left: 36px;" />
+              <i class="ph ph-user" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); font-size: 1.2rem;"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">密码</label>
+            <div style="position: relative;">
+              <input type="password" id="password" class="form-control" placeholder="初始密码 12345" required autocomplete="current-password" style="padding-left: 36px;" />
+              <i class="ph ph-lock-key" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); font-size: 1.2rem;"></i>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="ph-bold ph-sign-in"></i> 登录系统</button>
+        </form>
+        <div class="login-links">
+          <a href="register.html">没有账号？点击申请</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      if (window.__authUser && !window.__authUser.mustChangePassword) {
+        var target = 'index.html';
+        var qs = new URLSearchParams(window.location.search);
+        var from = qs.get('from'); var id = qs.get('id');
+        if (from === 'files') target = 'files.html';
+        else if (from === 'topics') target = 'topics.html';
+        else if (from === 'topic-detail' && id) target = 'topic-detail.html?id=' + encodeURIComponent(id);
+        window.location.href = target; return;
+      }
+      if (window.__authUser && window.__authUser.mustChangePassword) {
+        window.location.href = 'change-password.html'; return;
+      }
+      var form = document.getElementById('login-form');
+      var msgEl = document.getElementById('login-msg');
+      function showMsg(text, isError) {
+        msgEl.innerHTML = '<i class="ph-fill ' + (isError ? 'ph-warning-circle' : 'ph-check-circle') + '" style="vertical-align: middle; margin-right: 4px;"></i>' + text;
+        msgEl.className = 'login-msg ' + (isError ? 'error' : 'success');
+        msgEl.style.display = 'block';
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var account = document.getElementById('account').value.trim();
+        var password = document.getElementById('password').value;
+        window.__api.auth.login(account, password).then(function (result) {
+          window.__api.session.setToken(result.token); window.__authUser = result.user; window.__api.session.setSavedUser(window.__authUser);
+          if (result.user && result.user.mustChangePassword) { window.location.href = 'change-password.html'; return; }
+          var qs = new URLSearchParams(window.location.search); var from = qs.get('from'); var id = qs.get('id'); var target = 'index.html';
+          if (from === 'files') target = 'files.html'; else if (from === 'topics') target = 'topics.html'; else if (from === 'topic-detail' && id) target = 'topic-detail.html?id=' + encodeURIComponent(id);
+          if (window.__authUser && (window.__authUser.role === 'admin' || window.__authUser.role === 'super_admin')) target = 'admin.html';
+          window.location.href = target;
+        }).catch(function (err) {
+          showMsg(err && err.message ? err.message : '登录失败', true);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>话题详情 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css?v=20260314" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .topic-detail-header { margin-bottom: 24px; }
+    .topic-detail-title { font-size: 1.35rem; margin: 0 0 8px; }
+    .topic-detail-meta { color: var(--color-text-muted); font-size: 0.9rem; }
+    .topic-detail-content { white-space: pre-wrap; margin-top: 16px; }
+    .comment-form { margin-top: 24px; }
+    .comment-form .btn { margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js?v=20260314"></script>
+  <script src="js/auth.js?v=20260314"></script>
+  <script src="js/nav.js?v=20260314"></script>
+
+  <main class="main-content">
+    <div class="card">
+      <div class="topic-detail-header">
+        <a href="topics.html" class="text-muted" style="text-decoration: none; font-size: 0.9rem;">← 返回话题列表</a>
+        <h1 class="topic-detail-title" id="detail-title"></h1>
+        <div class="topic-detail-meta" id="detail-meta"></div>
+        <div class="topic-detail-content" id="detail-content"></div>
+        <div class="topic-actions mt-2" id="detail-actions"></div>
+      </div>
+
+      <h3 class="card-title">评论</h3>
+      <div class="comment-form" id="comment-form-wrap">
+        <form id="comment-form">
+          <div class="form-group">
+            <label for="comment-content">发表评论</label>
+            <textarea id="comment-content" class="form-control" placeholder="请输入评论内容" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">提交评论</button>
+        </form>
+      </div>
+      <ul class="comment-list mt-3" id="comment-list"></ul>
+      <p class="text-muted mt-1 mb-0" id="comment-empty">暂无评论。</p>
+    </div>
+  </main>
+
+  <script src="js/topic-detail.js?v=20260314"></script>
+</body>
+</html>

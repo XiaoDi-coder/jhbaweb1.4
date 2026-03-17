@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>账号管理 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .admin-section { margin-bottom: 32px; }
+    .admin-section h2 { margin-bottom: 16px; font-size: 1.15rem; }
+    .admin-msg { margin-bottom: 12px; padding: 10px; border-radius: var(--radius); font-size: 0.9rem; display: none; }
+    .admin-msg.error { background: #fed7d7; color: var(--color-danger); }
+    .admin-msg.success { background: #c6f6d5; color: var(--color-success); }
+    .pending-item, .user-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-border); gap: 12px; flex-wrap: wrap; }
+    .user-meta { font-size: 0.85rem; color: var(--color-text-muted); }
+    .create-inline { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
+    .create-inline .form-group { margin-bottom: 0; flex: 1; min-width: 200px; }
+    .bulk-tip { background: var(--color-bg); padding: 12px; border-radius: var(--radius); font-size: 0.9rem; color: var(--color-text-muted); margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+
+  <main class="main-content">
+    <h1 class="page-title">账号管理</h1>
+    <p class="text-muted mt-1">仅超级管理员可访问。审核申请、创建/分发账号。初始密码统一为 12345，首次登录后用户需自行修改。</p>
+
+    <div class="admin-msg" id="admin-msg"></div>
+
+    <div class="admin-section card">
+      <h2 class="card-title">待审核申请</h2>
+      <p class="text-muted" style="margin: -8px 0 12px; font-size: 0.9rem;">用户通过「申请账号」提交的邮箱/手机号，审核通过后即可使用该账号与初始密码 12345 登录。</p>
+      <ul id="pending-list"></ul>
+      <p class="text-muted mt-1 mb-0" id="pending-empty">暂无待审核申请。</p>
+    </div>
+
+    <div class="admin-section card">
+      <h2 class="card-title">创建并分发账号</h2>
+      <p class="text-muted" style="margin: -8px 0 12px; font-size: 0.9rem;">直接创建账号（邮箱或手机号），初始密码为 12345，请将账号与初始密码告知用户并提醒首次登录后修改密码。</p>
+      <form id="create-form" class="create-inline">
+        <div class="form-group">
+          <label for="new-account">邮箱或手机号</label>
+          <input type="text" id="new-account" class="form-control" placeholder="请输入邮箱或手机号" required />
+        </div>
+        <button type="submit" class="btn btn-primary">创建账号</button>
+      </form>
+      <p class="bulk-tip">批量导入公司人员（预留）：后续可对接现有公司人员架构或 Excel 批量导入，由超级管理员统一创建账号后分发。</p>
+    </div>
+
+    <div class="admin-section card">
+      <h2 class="card-title">已开通账号列表</h2>
+      <ul id="user-list"></ul>
+    </div>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

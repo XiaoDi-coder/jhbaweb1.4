@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>申请账号 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .register-wrap { max-width: 420px; margin: 48px auto; }
+    .register-card { padding: 32px; }
+    .register-title { text-align: center; margin-bottom: 8px; }
+    .register-desc { text-align: center; color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 24px; }
+    .register-msg { margin-bottom: 12px; padding: 10px; border-radius: var(--radius); font-size: 0.9rem; display: none; }
+    .register-msg.error { background: #fed7d7; color: var(--color-danger); }
+    .register-msg.success { background: #c6f6d5; color: var(--color-success); }
+    .register-form .btn { width: 100%; margin-top: 8px; }
+    .register-links { margin-top: 16px; text-align: center; }
+    .register-links a { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+
+  <main class="main-content">
+    <div class="register-wrap">
+      <div class="card register-card">
+        <h1 class="card-title register-title">申请账号</h1>
+        <p class="register-desc">本平台仅限内部人员使用。请使用公司邮箱或手机号提交申请，审核通过后将使用初始密码 <strong>12345</strong> 登录，首次登录后需修改密码。</p>
+        <div class="register-msg" id="register-msg"></div>
+        <form class="register-form" id="register-form">
+          <div class="form-group">
+            <label for="account">邮箱或手机号</label>
+            <input type="text" id="account" class="form-control" placeholder="请输入公司邮箱或手机号" required />
+          </div>
+          <button type="submit" class="btn btn-primary">提交申请</button>
+        </form>
+        <div class="register-links">
+          <a href="login.html">已有账号？去登录</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('register-form');
+      var msgEl = document.getElementById('register-msg');
+      function showMsg(text, isError) {
+        msgEl.textContent = text;
+        msgEl.className = 'register-msg ' + (isError ? 'error' : 'success');
+        msgEl.style.display = 'block';
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var account = document.getElementById('account').value.trim();
+        window.__api.public.applyAccount(account).then(function (ret) {
+          showMsg(ret.message || '申请已提交，请等待管理员审核', false);
+          form.reset();
+        }).catch(function (err) {
+          showMsg(err && err.message ? err.message : '提交失败', true);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

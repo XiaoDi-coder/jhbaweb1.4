@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>话题讨论 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css?v=20260314" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js?v=20260314"></script>
+  <script src="js/auth.js?v=20260314"></script>
+  <script src="js/nav.js?v=20260314"></script>
+
+  <main class="main-content">
+    <h1 class="page-title">话题讨论</h1>
+    <p class="text-muted mt-1">登录后可创建话题；可删除自己创建的话题；所有用户可在话题下评论。</p>
+
+    <!-- 搜索栏 -->
+    <div class="card search-card" id="topic-search-card">
+      <div class="flex gap-2 search-row">
+        <input type="text" id="topic-search" class="form-control" placeholder="搜索话题标题..." />
+        <button type="button" class="btn btn-primary" id="btn-search-topic">搜索</button>
+        <button type="button" class="btn btn-outline btn-clear-search" id="btn-clear-topic-search">清除</button>
+      </div>
+    </div>
+
+    <div class="card" id="create-topic-card" style="display: none;">
+      <h2 class="card-title">发布新话题</h2>
+      <form id="create-topic-form">
+        <div class="form-group">
+          <label for="topic-title">标题</label>
+          <input type="text" id="topic-title" class="form-control" placeholder="请输入话题标题" required />
+        </div>
+        <div class="form-group">
+          <label for="topic-content">内容</label>
+          <textarea id="topic-content" class="form-control" placeholder="请输入话题内容" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">发布</button>
+        <button type="button" class="btn btn-outline" id="cancel-create" style="border-color: var(--color-border); color: var(--color-text); margin-left: 8px;">取消</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="flex gap-2" style="justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <h2 class="card-title mb-0">话题列表</h2>
+        <button type="button" class="btn btn-primary" id="btn-new-topic">发布话题</button>
+      </div>
+      <ul class="topic-list" id="topic-list"></ul>
+      <p class="text-muted mt-1 mb-0" id="topic-empty">暂无话题。</p>
+    </div>
+  </main>
+
+  <script src="js/topics.js?v=20260314"></script>
+</body>
+</html>

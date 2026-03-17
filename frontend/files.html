@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>资源文件 - 金华市保安服务有限公司 内部资源共享平台</title>
+  <link rel="stylesheet" href="css/style.css?v=20260314" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="site-nav-root"></div>
+  <script src="js/api.js?v=20260314"></script>
+  <script src="js/auth.js?v=20260314"></script>
+  <script src="js/nav.js?v=20260314"></script>
+
+  <main class="main-content">
+    <h1 class="page-title">资源文件</h1>
+    <p class="text-muted mt-1">支持上传普通文件与压缩包（如 .zip、.rar），登录后可上传；所有用户可下载。</p>
+
+    <!-- 搜索栏 -->
+    <div class="card search-card" id="file-search-card">
+      <div class="flex gap-2 search-row">
+        <input type="text" id="file-search" class="form-control" placeholder="搜索文件名..." />
+        <button type="button" class="btn btn-primary" id="btn-search-file">搜索</button>
+        <button type="button" class="btn btn-outline btn-clear-search" id="btn-clear-file-search">清除</button>
+      </div>
+    </div>
+
+    <div class="upload-zone" id="upload-zone">
+      <input type="file" id="file-input" multiple accept="*/*" />
+      <p class="mb-0"><strong>点击或拖拽文件到此处上传</strong></p>
+      <p class="text-muted mt-1 mb-0">支持多选，含压缩包（.zip / .rar 等）</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">文件列表</h2>
+      <ul class="file-list" id="file-list">
+        <!-- 由 js 填充，或静态示例 -->
+      </ul>
+      <p class="text-muted mt-1 mb-0" id="file-empty">暂无文件，请上传。</p>
+    </div>
+  </main>
+
+  <script src="js/files.js?v=20260314"></script>
+</body>
+</html>
