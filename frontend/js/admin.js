@@ -78,9 +78,13 @@
         var r = u.role === 'super_admin' ? '超级管理员' : (u.role === 'admin' ? '管理员' : '普通用户');
         var firstLogin = u.must_change_password ? '需修改密码' : '已修改密码';
         var time = u.created_at ? new Date(u.created_at).toLocaleString('zh-CN') : '';
-        return '<li class="user-item">' +
+        return '<li class="user-item" style="display: flex; justify-content: space-between; align-items: center;">' +
           '<div><span class="file-name">' + escapeHtml(u.account) + '</span>' +
           '<div class="user-meta">' + r + ' · ' + firstLogin + ' · 创建于 ' + time + '</div></div>' +
+          '<div class="user-actions">' +
+            '<button class="btn btn-small" data-action="edit" data-account="' + escapeHtml(u.account) + '" style="margin-right: 5px;">修改权限</button>' +
+            '<button class="btn btn-small error" data-action="delete" data-account="' + escapeHtml(u.account) + '">删除</button>' +
+          '</div>' +
           '</li>';
       }).join('');
     }).catch(function (err) {
